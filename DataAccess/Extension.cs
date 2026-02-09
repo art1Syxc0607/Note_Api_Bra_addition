@@ -10,8 +10,8 @@ public static class Extensions
         services.AddScoped<INoteRepository, NoteRepository>();
         services.AddDbContext<AppContext>(options =>
         {
-            options.UseSqlite("Data Source=notes_bra.db"); // Теперь это должно работать
-            options.UseSqlite("Data Source=persons.db"); 
+            options.UseSqlite("Data Source=notes_persons.db");
+
         });
         return services;
     }
