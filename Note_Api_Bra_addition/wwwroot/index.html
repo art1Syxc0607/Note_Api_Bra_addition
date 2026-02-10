@@ -179,7 +179,7 @@
                 const result = await response.json();
                 localStorage.setItem('token', result.token);
                 alert('Успешный вход!');
-                window.location.href = '/';
+                //window.location.href = '/';
             } else {
                 const error = await response.text();
                 alert('Ошибка входа: ' + error);

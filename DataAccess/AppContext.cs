@@ -11,6 +11,8 @@ public class AppContext(DbContextOptions<AppContext> options) : DbContext(option
     {
         modelBuilder.Entity<Note>().HasKey(x => x.Id);
         modelBuilder.Entity<Note>().Property(x => x.Text).HasMaxLength(140);
+        modelBuilder.Entity<Note>().Property(x => x.Id_person)
+           .IsRequired();
 
         // Конфигурация для Person
         modelBuilder.Entity<Person>().HasKey(x => x.Id);
@@ -19,6 +21,7 @@ public class AppContext(DbContextOptions<AppContext> options) : DbContext(option
             .HasMaxLength(100);
         modelBuilder.Entity<Person>().Property(x => x.Password_hash)
             .IsRequired();
+       
 
         base.OnModelCreating(modelBuilder);
     }
