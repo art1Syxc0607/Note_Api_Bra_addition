@@ -1,4 +1,5 @@
-﻿namespace DataAccess;
+﻿using DataAccess.Entities;
+namespace DataAccess.Repositories;
 
 public interface INoteRepository
 {
@@ -7,5 +8,5 @@ public interface INoteRepository
     //Task UpdateByIdAsync(int id, string text,CancellationToken cancellationToken = default);
     Task UpdateAsync(Note note, CancellationToken cancellationToken = default);
     Task DeleteAsync(Note note, CancellationToken cancellationToken = default);
-    Task Login(string email_login, string password_hash, CancellationToken cancellationToken = default);
+
 }

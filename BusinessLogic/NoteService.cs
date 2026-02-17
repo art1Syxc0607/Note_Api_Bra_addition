@@ -1,61 +1,45 @@
-﻿using DataAccess;
-using BCrypt.Net;
+﻿using BCrypt.Net;
+using DataAccess.Repositories;
+using DataAccess.Entities;
 namespace BussinessLogic;
 
 internal class NoteService(INoteRepository noteRepository) : INoteService
 {
-    public async Task CreateAsync(string text, CancellationToken cancellationToken = default)
+
+
+    public async Task CreateNoteAsync(string text, int personId)
     {
         var note = new Note
         {
-            Text = text
+            Text = text,
+            Id_person = personId, // ← Привязываем к конкретному пользователю
+            Created = DateTime.UtcNow,
+            Updated = DateTime.UtcNow
         };
 
-        await noteRepository.CreateAsync(note, cancellationToken);
+        await noteRepository.CreateAsync(note);
     }
 
-    public async Task<string?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<List<Note>> GetPersonNotesAsync(int personId)
     {
-        var note = await noteRepository.GetByIdAsync(id, cancellationToken);
-        if (note is null)
-            throw new Exception("Note note found");
-
-        return note.Text;
+        // Возвращаем только заметки этого пользователя
+        return await noteRepository.GetByPersonIdAsync(personId);
     }
 
-    // my
-    //public async Task UpdateByIdAsync(int id, string text, CancellationToken cancellationToken = default)
-    //{
-    //    await noteRepository.UpdateByIdAsync(id, text, cancellationToken);
-    //}
-
-    public async Task UpdateAsync(int id, string newtext, CancellationToken cancellationToken = default)
+    public async Task UpdateNoteAsync(int noteId, string newText, int personId)
     {
-        var note = await noteRepository.GetByIdAsync(id, cancellationToken);
-        if (note is null)
-            throw new Exception("Note note found");
+        var note = await noteRepository.GetByIdAsync(noteId);
 
-        note.Text = newtext;
-        await noteRepository.UpdateAsync(note, cancellationToken);
+        // Важно! Проверяем, что заметка принадлежит пользователю
+        if (note.Id_person != personId)
+            throw new UnauthorizedAccessException("Это не ваша заметка");
+
+        note.Text = newText;
+        note.Updated = DateTime.UtcNow;
+
+        await noteRepository.UpdateAsync(note);
     }
 
-    public async Task DeleteAsync(int id, CancellationToken cancellationToken = default)
-    {
-        var note = await noteRepository.GetByIdAsync(id, cancellationToken);
-        if (note is null)
-            throw new Exception("Note note found");
 
-        await noteRepository.DeleteAsync(note, cancellationToken);
-    }
-
-    public async Task Login(string? email_login, string? password, CancellationToken cancellationToken = default)
-    {
-        if (email_login == null || password == null)
-            throw new Exception("Login or passwort is empty");
-
-        string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password, 12);
-
-        await noteRepository.Login(email_login, hashedPassword, cancellationToken);
-    }
 
 }

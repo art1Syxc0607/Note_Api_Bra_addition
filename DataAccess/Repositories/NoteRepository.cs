@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using DataAccess.Entities;
 
-namespace DataAccess;
+namespace DataAccess.Repositories;
 
 internal class NoteRepository(AppContext context) : INoteRepository
 {
@@ -41,18 +42,20 @@ internal class NoteRepository(AppContext context) : INoteRepository
         await context.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task Login(string email_login, string password_hash, CancellationToken cancellationToken = default)
-    {
-        //return await context.Persons.FirstOrDefaultAsync(x => x.Email_password == person.Email_password && x.Password_ == person.Password_);
-        var person = await context.Persons.FirstOrDefaultAsync(x => x.Email_login == email_login && x.Password_hash == password_hash);
-        if (person == null)
-        {
-            context.Persons.Add(new Person { Email_login = email_login, Password_hash = password_hash });
+    //public async Task Login(string email_login, string password_hash, CancellationToken cancellationToken = default)
+    //{
+    //    //return await context.Persons.FirstOrDefaultAsync(x => x.Email_password == person.Email_password && x.Password_ == person.Password_);
+    //    var person = await context.Persons.FirstOrDefaultAsync(x => x.Email_login == email_login && x.Password_hash == password_hash);
+    //    if (person == null)
+    //    {
+    //        context.Persons.Add(new Person { Email_login = email_login, Password_hash = password_hash });
 
-            await context.SaveChangesAsync(cancellationToken);
+    //        await context.SaveChangesAsync(cancellationToken);
 
 
-        }
-    }
+    //    }
+    //}
+
+
 
 }
