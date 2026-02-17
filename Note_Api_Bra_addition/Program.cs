@@ -25,7 +25,7 @@ var app = builder.Build();
 
 
 
-app.UseStaticFiles();
+app.UseStaticFiles(); // /swagger/index.html
 app.MapControllers();
 app.UseSwagger();
 app.UseSwaggerUI();

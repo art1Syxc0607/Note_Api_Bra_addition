@@ -3,10 +3,9 @@ namespace DataAccess.Repositories;
 
 public interface INoteRepository
 {
-    Task CreateAsync(Note note, CancellationToken cancellationToken = default);
-    Task<Note?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
-    //Task UpdateByIdAsync(int id, string text,CancellationToken cancellationToken = default);
-    Task UpdateAsync(Note note, CancellationToken cancellationToken = default);
-    Task DeleteAsync(Note note, CancellationToken cancellationToken = default);
-
+    Task<List<Note>?> GetNotesByPersonIdAsync(int personId);
+    Task<Note?> GetByIdAsync(int id);
+    Task CreateAsync(Note note); 
+    Task UpdateAsync(Note note);
+    Task DeleteAsync(Note note);
 }

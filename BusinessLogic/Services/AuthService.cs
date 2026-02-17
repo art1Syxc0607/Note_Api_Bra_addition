@@ -55,7 +55,7 @@ public class AuthService : IAuthService
             return AuthResult.ErrorResult("Неверный логин или пароль");
 
         // 3. Генерируем токен
-        var token = _jwtService.GenerateToken(person.Email_login);
+        var token = _jwtService.GenerateToken(person.Email_login, person.Id);
 
         return AuthResult.SuccessResult(token, person.Id, person.Email_login);
     }

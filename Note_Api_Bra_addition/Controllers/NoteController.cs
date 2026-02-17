@@ -28,7 +28,7 @@ public class NoteController(INoteService noteService) : ControllerBase
     public async Task<IActionResult> CreateAsync([FromBody] CreateNoteDto createdto)
     {
         var personId = GetCurrentPersonId();
-        await noteService.CreateAsync(createdto.Text, personId);
+        await noteService.CreateNoteAsync(createdto.Text, personId);
         return NoContent();
     }
 

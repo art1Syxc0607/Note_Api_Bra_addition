@@ -11,7 +11,7 @@ public class AppContext(DbContextOptions<AppContext> options) : DbContext(option
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Note>().HasKey(x => x.Id);
-        modelBuilder.Entity<Note>().Property(x => x.Text).HasMaxLength(140);
+        modelBuilder.Entity<Note>().Property(x => x.Text).HasMaxLength(140).IsRequired();
         modelBuilder.Entity<Note>().Property(x => x.Id_person)
            .IsRequired();
 
