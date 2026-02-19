@@ -13,11 +13,11 @@ namespace Note_Api_Bra_addition;
 //[Route("login")]
 public class PersonController(IAuthService authService) : ControllerBase
 {
-    [HttpGet("login")]
-    public async Task<IActionResult> Send_form()
-    {
-        return new VirtualFileResult("/index.html", "text/html");
-    }
+    //[HttpGet("login")]
+    //public async Task<IActionResult> Send_form()
+    //{
+    //    return new VirtualFileResult("/index.html", "text/html");
+    //}
 
 
 

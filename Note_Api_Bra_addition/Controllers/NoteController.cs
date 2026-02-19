@@ -68,13 +68,13 @@ public class NoteController(INoteService noteService) : ControllerBase
         return Ok(notes);
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateNote(int id, [FromBody] UpdateNoteDto dto)
+    [HttpPut]
+    public async Task<IActionResult> UpdateNote([FromBody] UpdateNoteDto dto)
     {
         var personId = GetCurrentPersonId();
 
         // 4. В сервисе можно проверить, что заметка принадлежит пользователю
-        await noteService.UpdateNoteAsync(id, dto.Text, personId);
+        await noteService.UpdateNoteAsync(dto.Id, dto.Text, personId);
 
         return NoContent();
     }
